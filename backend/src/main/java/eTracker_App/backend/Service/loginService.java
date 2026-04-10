@@ -35,8 +35,8 @@ public class loginService {
         newUser.setPassword(passwordEncoder.encode(signupDTO.getPassword()));
         newUser.setEmailId(signupDTO.getEmailId());
         
-        loginRepo.save(newUser);
-        return "User registered successfully.";
+        newUser = loginRepo.save(newUser);
+        return newUser.getId().toString();
     }
 
     public String signinUser(LoginDTO loginDTO) {

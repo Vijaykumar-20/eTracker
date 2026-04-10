@@ -27,7 +27,7 @@ public class Users {
     @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
+    @Column(name = "mobile_number", unique = true)
     @Pattern(regexp = "^[0-9]{10}$", message = "Mobile number must be 10 digits")
     private String mobileNumber;
 

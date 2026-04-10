@@ -16,8 +16,8 @@ export default function Signup() {
     e.preventDefault();
     try {
       setErrorMsg('');
-      await api.post('/v1/users/signup', { userName, mobileNumber, emailId, password });
-      localStorage.setItem('userId', mobileNumber);
+      const res = await api.post('/v1/users/signup', { userName, mobileNumber, emailId, password });
+      localStorage.setItem('userId', res.data);
       setIsSubmitting(true);
     } catch (err) {
       const data = err.response?.data;

@@ -24,17 +24,19 @@ public class loginController {
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody SignupDTO signupDTO) {
         String response = loginService.signupUser(signupDTO);
-        if (response.equals("User registered successfully.")) {
+        try {
+            Long.parseLong(response);
             return ResponseEntity.ok(response);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().body(response);
         }
-        return ResponseEntity.badRequest().body(response);
     }
 
     @PostMapping("/signin")
     public ResponseEntity<String> signin(@RequestBody LoginDTO loginDTO) {
-        String loggedInUserMobile = loginService.signinUser(loginDTO);
-        if (loggedInUserMobile != null) {
-            return ResponseEntity.ok(loggedInUserMobile);
+        String loggedInUserId = loginService.signinUser(loginDTO);
+        if (loggedInUserId != null) {
+            return ResponseEntity.ok(loggedInUserId);
         }
         return ResponseEntity.status(401).body("Invalid credentials");
     }
