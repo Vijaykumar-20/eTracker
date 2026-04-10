@@ -1,27 +1,25 @@
 # Build stage
-FROM eclipse-temurin:25-jdk AS build
+FROM eclipse-temurin:25-jdk-alpine AS build
 WORKDIR /app
 
-# Limit Maven memory usage to fit in Render's free tier (512MB)
+# Install Maven directly to avoid wrapper (mvnw) permission issues
+RUN apk add --no-cache maven
+
+# Limit Maven memory usage
 ENV MAVEN_OPTS="-Xmx256m -XX:MaxMetaspaceSize=128m"
 
 # Copy all files
 COPY . .
 
-# Ensure the maven wrapper is executable
-RUN chmod +x mvnw
+# Build using native mvn command
+RUN mvn clean package -DskipTests
 
-# Build the application - skip tests to save time and memory
-RUN ./mvnw clean package -DskipTests
-
-# Run stage - Use alpine for a smaller image size
+# Run stage
 FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app
-
-# Copy the jar from build stage
 COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-# Limit the JVM memory in the run stage as well
+# Limit JVM memory in run stage
 ENTRYPOINT ["java", "-Xmx256m", "-jar", "app.jar"]
