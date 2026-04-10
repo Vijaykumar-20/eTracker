@@ -1,5 +1,5 @@
-# API Proxy (Uncomment and replace with your backend URL after deployment)
-# /api/*  https://your-backend.railway.app/:splat  200
+# API Proxy
+/api/*  https://etracker-backend-dr74.onrender.com/api/:splat  200
 
 # SPA Redirect
 /* /index.html 200
