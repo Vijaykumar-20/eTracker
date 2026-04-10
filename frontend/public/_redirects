@@ -1,5 +1,9 @@
 # API Proxy
 /api/*  https://etracker-backend-dr74.onrender.com/api/:splat  200
 
+# OAuth2 Proxy
+/oauth2/*  https://etracker-backend-dr74.onrender.com/oauth2/:splat  200
+/login/oauth2/*  https://etracker-backend-dr74.onrender.com/login/oauth2/:splat  200
+
 # SPA Redirect
 /* /index.html 200

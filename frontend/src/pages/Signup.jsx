@@ -105,7 +105,7 @@ export default function Signup() {
             type="button" 
             className="btn" 
             onClick={() => {
-              const authUrl = import.meta.env.VITE_AUTH_URL || 'http://localhost:8080';
+              const authUrl = import.meta.env.VITE_AUTH_URL || '';
               window.location.href = `${authUrl}/oauth2/authorization/google`;
             }}
             style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)', transition: 'all 0.2s', padding: '0', width: '52px', height: '52px', borderRadius: '50%' }} 
