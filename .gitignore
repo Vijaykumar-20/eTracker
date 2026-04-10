@@ -1,0 +1,23 @@
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Java / Spring Boot
+backend/target/
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+*.class
+*.jar
+*.war
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/.env*
+
+# Logs
+*.log

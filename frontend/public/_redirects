@@ -1,0 +1,5 @@
+# API Proxy (Uncomment and replace with your backend URL after deployment)
+# /api/*  https://your-backend.railway.app/:splat  200
+
+# SPA Redirect
+/* /index.html 200
