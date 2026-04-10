@@ -2,16 +2,13 @@
 FROM eclipse-temurin:25-jdk AS build
 WORKDIR /app
 
-# Copy the maven wrapper and pom file
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
+# Copy all files at once to ensure maven wrapper is present
+COPY . .
+
+# Ensure the maven wrapper is executable
 RUN chmod +x mvnw
 
-# Download dependencies (this layer will be cached)
-RUN ./mvnw dependency:go-offline
-
-# Copy the source code and build the application
-COPY src ./src
+# Build the application
 RUN ./mvnw clean package -DskipTests
 
 # Run stage
