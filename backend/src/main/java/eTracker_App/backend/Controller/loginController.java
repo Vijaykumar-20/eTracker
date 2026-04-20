@@ -21,6 +21,15 @@ public class loginController {
         this.loginService = loginService;
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleExceptions(Exception ex) {
+        String msg = ex.getMessage();
+        if (msg != null && msg.contains("ConstraintViolationException")) {
+            return ResponseEntity.badRequest().body("Invalid input: Please verify mobile number is exactly 10 digits.");
+        }
+        return ResponseEntity.status(500).body("Server error: " + msg);
+    }
+
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody SignupDTO signupDTO) {
         String response = loginService.signupUser(signupDTO);
