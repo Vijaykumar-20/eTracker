@@ -39,4 +39,24 @@ public class TransactionController {
         transactionService.deleteTransaction(id);
         return ResponseEntity.ok("Transaction deleted");
     }
+
+    @PostMapping("/mock-paytm-sync")
+    public ResponseEntity<String> mockPaytmSync(@RequestParam String userId) {
+        try {
+            transactionService.mockPaytmSync(userId);
+            return ResponseEntity.ok("Successfully synced mock Paytm transactions");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to sync mock Paytm transactions: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/upload-statement")
+    public ResponseEntity<String> uploadStatement(@RequestParam("file") org.springframework.web.multipart.MultipartFile file, @RequestParam("userId") String userId) {
+        try {
+            transactionService.processCsvStatement(file, userId);
+            return ResponseEntity.ok("Statement uploaded and processed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to process statement: " + e.getMessage());
+        }
+    }
 }

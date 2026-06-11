@@ -16,7 +16,7 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
-      '/login': {
+      '/login/oauth2': {
         target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false,

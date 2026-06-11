@@ -21,12 +21,14 @@ public class SplitController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Split> createSplit(@RequestBody SplitDTO splitDTO) {
+    public ResponseEntity<?> createSplit(@RequestBody SplitDTO splitDTO) {
         try {
             Split createdSplit = splitService.createSplit(splitDTO);
             return ResponseEntity.ok(createdSplit);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            java.util.Map<String, String> response = new java.util.HashMap<>();
+            response.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
         }
     }
 

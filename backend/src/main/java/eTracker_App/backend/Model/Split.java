@@ -29,6 +29,14 @@ public class Split {
     @Column(nullable = false)
     private String userId;
 
+    private String description;
+
+    @OneToMany(mappedBy = "split", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<SplitParticipant> participants;
+
+    @Transient
+    private String creatorName;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 

@@ -8,4 +8,7 @@ public class SplitDTO {
     private String currency;
     private String splitType;
     private String userId;
+    private String description;
+    private String date;
+    private java.util.List<SplitParticipantDTO> splitUsers;
 }

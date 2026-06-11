@@ -55,4 +55,27 @@ public class loginController {
         Optional<Users> user = loginService.getProfile(userId);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/check-mobile")
+    public ResponseEntity<?> checkMobile(@RequestParam String mobileNumber) {
+        Optional<Users> userOpt = loginService.findByMobileNumber(mobileNumber);
+        java.util.Map<String, Object> response = new java.util.HashMap<>();
+        if (userOpt.isPresent()) {
+            response.put("exists", true);
+            response.put("userName", userOpt.get().getUserName());
+        } else {
+            response.put("exists", false);
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/profile/{userId}")
+    public ResponseEntity<?> updateProfile(@PathVariable Long userId, @RequestParam(required = false) String userName, @RequestParam(required = false) String mobileNumber) {
+        try {
+            Users updated = loginService.updateProfile(userId, userName, mobileNumber);
+            return ResponseEntity.ok(updated);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(java.util.Collections.singletonMap("message", e.getMessage()));
+        }
+    }
 }

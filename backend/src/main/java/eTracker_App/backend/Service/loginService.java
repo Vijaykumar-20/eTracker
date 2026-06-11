@@ -56,4 +56,28 @@ public class loginService {
     public Optional<Users> getProfile(Long userId) {
         return loginRepo.findById(userId);
     }
+
+    public Optional<Users> findByMobileNumber(String mobileNumber) {
+        return loginRepo.findByMobileNumber(mobileNumber);
+    }
+
+    public Users updateProfile(Long userId, String userName, String mobileNumber) {
+        Optional<Users> userOpt = loginRepo.findById(userId);
+        if (userOpt.isEmpty()) {
+            throw new IllegalArgumentException("User not found.");
+        }
+        Users user = userOpt.get();
+        if (userName != null && !userName.trim().isEmpty()) {
+            user.setUserName(userName);
+        }
+        if (mobileNumber != null && !mobileNumber.trim().isEmpty()) {
+            // Check if mobile number is already taken by another user
+            Optional<Users> existing = loginRepo.findByMobileNumber(mobileNumber);
+            if (existing.isPresent() && !existing.get().getId().equals(userId)) {
+                throw new IllegalArgumentException("Mobile number is already registered by another user.");
+            }
+            user.setMobileNumber(mobileNumber);
+        }
+        return loginRepo.save(user);
+    }
 }
